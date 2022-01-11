@@ -13,7 +13,7 @@ export const main = async () => {
 
   let isFlashLoaning = false;
 
-  const [maxX, _] = process.stdout.getWindowSize();
+  // const [maxX, _] = process.stdout.getWindowSize();
 
   const p = new Table({
     // title: "Quotes",
@@ -29,7 +29,7 @@ export const main = async () => {
       { name: "difference", title: "±", alignment: "right" },
       { name: "percentage", title: "%", alignment: "right" },
 
-      { name: "log", title: "Log", alignment: "left", maxLen: maxX - 101 },
+      { name: "log", title: "Log", alignment: "left" },
 
       { name: "time", title: "Time", alignment: "right" },
       { name: "timestamp", title: "Timestamp", alignment: "right" },
@@ -51,13 +51,11 @@ export const main = async () => {
         name: "firstRoutes",
         title: "First Routes",
         alignment: "left",
-        maxLen: maxX / 2 - 78,
       },
       {
         name: "secondRoutes",
         title: "Second Routes",
         alignment: "left",
-        maxLen: maxX / 2 - 79,
       },
 
       {

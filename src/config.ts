@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { ERC20Token } from "./constrants/addresses";
+import { ERC20Token, ERC20TokenAll } from "./constrants/addresses";
 
 export const renderInterval = 1 * 1000;
 
@@ -22,19 +22,35 @@ export const explorerURL = "https://polygonscan.com";
 
 // Token pair the bot trading
 export const baseTokens = [
-  ERC20Token.DAI,
-  ERC20Token.WETH,
-  ERC20Token.USDC,
-  ERC20Token.USDT,
-  ERC20Token.WMATIC,
+  // ERC20Token.DAI,
+  // ERC20Token.WETH,
+  // ERC20Token.USDC,
+  // ERC20Token.USDT,
+  // ERC20Token.WMATIC,
+  // ERC20Token.WBTC,
+  ...Object.keys(ERC20TokenAll).map((key) => ERC20TokenAll[key]),
+  // ERC20Token.MATIC,
+  // ERC20Token.LINK,
+  // ERC20Token.COMP,
+  // ERC20Token.CEL,
+  // ERC20Token.CRV,
+  // ERC20Token.QI,
 ];
 
 export const tradingTokens = [
-  ERC20Token.DAI,
-  ERC20Token.WETH,
-  ERC20Token.USDC,
-  ERC20Token.USDT,
-  ERC20Token.WMATIC,
+  // ERC20Token.DAI,
+  // ERC20Token.WETH,
+  // ERC20Token.USDC,
+  // ERC20Token.USDT,
+  // ERC20Token.WMATIC,
+  // ERC20Token.WBTC,
+  ...Object.keys(ERC20TokenAll).map((key) => ERC20TokenAll[key]),
+  // ERC20Token.MATIC,
+  // ERC20Token.LINK,
+  // ERC20Token.COMP,
+  // ERC20Token.CEL,
+  // ERC20Token.CRV,
+  // ERC20Token.QI,
 ];
 
 /**
@@ -43,7 +59,7 @@ export const tradingTokens = [
  * if you have deployed your own contract, you can use it instead of the default one
  */
 export const flashloanAddress: string =
-  "0x0e0Ec2C716b5Ba2512Af9d3790D8804Da42DDD58";
+  "0x04fcB9c04344327f359bCb2c54945ce48b32Fb3a";
 
 // protocols the bot will use
 export const protocols =
