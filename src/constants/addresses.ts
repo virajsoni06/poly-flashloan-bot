@@ -93,6 +93,22 @@ export const ERC20Token: erc20Token = {
     logoURI:
       "https://tokens.1inch.io/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619.png",
   },
+  UNI: {
+    symbol: "UNI",
+    name: "Uniswap",
+    decimals: 18,
+    address: "0xb33eaad8d922b1083446dc23f610c2567fb5180f",
+    logoURI:
+      "https://tokens.1inch.io/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984.png",
+  },
+  AAVE: {
+    symbol: "AAVE",
+    name: "Aave",
+    decimals: 18,
+    address: "0xd6df932a45c0f255f85145f286ea0b292b21c90b",
+    logoURI:
+      "https://tokens.1inch.io/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9.png",
+  },
   CRV: {
     symbol: "CRV",
     name: "CRV",
@@ -1177,14 +1193,14 @@ export const dodoV2Pool: PoolMap = {
   USDT_DAI: "0xDa43a4aAB20D313Ab3AA07d8E09f3521F32a3D83",
   WETH_USDC: "0x5333Eb1E32522F1893B7C9feA3c263807A02d561",
   WMATIC_USDC: "0x10Dd6d8A29D489BEDE472CC1b22dc695c144c5c7",
-  WMATIC_WETH: "0xC877D7BbCB5b40C3F3d7e7E0d0DA6220BEE027a1",
-  USDC_USDT: "0x56FF5E27d40FBF746ADaa3DA820ADb2056F225E7",
+  USDT_USDC: "0xA0020444b98f67B77a3d6dE6E66aF11c87da086e",
   WBTC_USDC: "0xe020008465cD72301A18b97d33D73bF44858A4b7",
 };
 
 type RouterMap = { [protocol: string]: string };
 
 export const uniswapRouter: RouterMap = {
+  POLYGON_UNISWAP_V3: "0xE592427A0AEce92De3Edee1F18E0157C05861564",
   POLYGON_SUSHISWAP: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
   POLYGON_QUICKSWAP: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff",
   POLYGON_APESWAP: "0xC0788A3aD43d79aa53B09c2EaCc313A787d1d607",

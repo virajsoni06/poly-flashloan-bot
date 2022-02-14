@@ -1,13 +1,8 @@
 import { ethers } from "ethers";
 import { dodoV2Pool, ERC20Token, uniswapRouter } from "../constants/addresses";
 
-const { BigNumber } = ethers;
-
-const BASE_TEN = 10;
-
-// Defaults to e18 using amount * 10^18
 export const getBigNumber = (amount: number, decimals = 18) => {
-  return BigNumber.from(amount).mul(BigNumber.from(BASE_TEN).pow(decimals));
+  return ethers.utils.parseUnits(amount.toString(), decimals);
 };
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
@@ -36,7 +31,12 @@ export const findRouter = (router: string) => {
   return "UNKNOWN";
 };
 
-export const findToken = (token: string) => {
+/**
+ *
+ * @param token address
+ * @returns token symbol
+ */
+export const findToken = (token: string): string => {
   for (let k of Object.keys(ERC20Token)) {
     if (token.toLowerCase() === ERC20Token[k].address.toLowerCase()) {
       return k;
@@ -52,4 +52,12 @@ export const findPool = (pool: string) => {
     }
   }
   return "UNKNOWN";
+};
+
+/**
+ * @param protocol
+ * @returns router address
+ */
+export const findRouterFromProtocol = (protocol: number) => {
+  return uniswapRouter[Object.keys(uniswapRouter)[protocol]];
 };

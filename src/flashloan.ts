@@ -1,9 +1,8 @@
 import { ethers } from "ethers";
 import * as FlashloanJson from "./abis/Flashloan.json";
 import { flashloanAddress, loanAmount, gasLimit, gasPrice } from "./config";
-import { IToken, dodoV2Pool, uniswapRouter } from "./constants/addresses";
-import { IFlashloanRoute, IParams, IRoute } from "./interfaces/main";
-import { getUniswapV3PoolFee } from "./uniswap/v3/fee";
+import { IToken, dodoV2Pool } from "./constants/addresses";
+import { IFlashloanRoute, IParams } from "./interfaces/main";
 import { getBigNumber } from "./utils/index";
 
 const maticProvider = new ethers.providers.JsonRpcProvider(
@@ -43,97 +42,20 @@ const getLendingPool = (borrowingToken: IToken) => {
 
 export const flashloan = async (
   tokenIn: IToken,
-  tokenOut: IToken,
-  firstRoutes: IRoute[],
-  secondRoutes: IRoute[]
+  firstRoutes: IFlashloanRoute[],
+  secondRoutes: IFlashloanRoute[]
 ) => {
   let params: IParams;
 
   params = {
     flashLoanPool: getLendingPool(tokenIn),
-    loanAmount: getBigNumber(loanAmount, 6),
-    firstRoutes: changeToFlashloanRoute(tokenIn, firstRoutes),
-    secondRoutes: changeToFlashloanRoute(tokenOut, secondRoutes),
+    loanAmount: getBigNumber(loanAmount, tokenIn.decimals),
+    firstRoutes: firstRoutes,
+    secondRoutes: secondRoutes,
   };
 
   return Flashloan.connect(signer).dodoFlashLoan(params, {
     gasLimit: gasLimit,
     gasPrice: ethers.utils.parseUnits(`${gasPrice}`, "gwei"),
   });
-  // const polyscanURL = "https://polygonscan.com/tx/" + tx.hash;
-  // console.log("Flashloan tx: ", tx.hash);
-  // console.log("Polyscan URL: ", polyscanURL);
-};
-
-/**
- * change 1inch route to flashloan route
- * @param tokenIn token to borrow from dodo pool
- * @param routes
- * @returns
- */
-const changeToFlashloanRoute = (
-  tokenIn: IToken,
-  routes: IRoute[]
-): IFlashloanRoute[] => {
-  let flashloanRoutes: IFlashloanRoute[] = getInitialFlashloanRoutes(
-    tokenIn,
-    routes[0]
-  );
-  let previousProtocol = routes[0].name;
-  let currentIndex = 0;
-
-  for (const swap of routes) {
-    if (previousProtocol === swap.name) {
-      flashloanRoutes[currentIndex].path.push(swap.toTokenAddress);
-      if (swap.name == "POLYGON_UNISWAP_V3") {
-        flashloanRoutes[currentIndex].fee = getUniswapV3PoolFee(
-          flashloanRoutes[currentIndex].path
-        );
-      }
-    } else {
-      const lastPath = flashloanRoutes[currentIndex].path;
-      const fromToken = lastPath[lastPath.length - 1];
-      const path = [fromToken, swap.toTokenAddress];
-      const protocol = pickProtocol(swap.name);
-      flashloanRoutes.push({
-        path: path,
-        protocol: protocol,
-        pool: pickPoolAddress(protocol, swap),
-        fee: protocol === 2 ? getUniswapV3PoolFee(path) : [0],
-      });
-      currentIndex++;
-      previousProtocol = swap.name;
-    }
-  }
-  return flashloanRoutes;
-};
-
-const getInitialFlashloanRoutes = (
-  tokenIn: IToken,
-  route: IRoute
-): IFlashloanRoute[] => {
-  const protocol = pickProtocol(route.name);
-  const firstRoute: IFlashloanRoute = {
-    path: [tokenIn.address],
-    protocol: pickProtocol(route.name),
-    pool: pickPoolAddress(protocol, route),
-    fee: [0],
-  };
-  return [firstRoute];
-};
-
-const pickProtocol = (protocol_name: string) => {
-  if (protocol_name === "POLYGON_UNISWAP_V3") {
-    return 2;
-  }
-  return 1;
-};
-
-const pickPoolAddress = (protocol: number, route: IRoute) => {
-  switch (protocol) {
-    case 1:
-      return uniswapRouter[route.name];
-    default:
-      return uniswapRouter.POLYGON_SUSHISWAP;
-  }
 };
