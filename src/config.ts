@@ -5,7 +5,7 @@ export const renderInterval = 1 * 1000;
 // interval of price check (ms)
 export const interval = 10 * 1000;
 
-export const initialAmount = 1000;
+export const initialAmount = 10000;
 export const loanAmount = 10000;
 export const diffAmount = 10; // Not enough amount to return loan
 
@@ -17,35 +17,23 @@ export const explorerURL = "https://polygonscan.com";
 
 // Token pair the bot trading
 export const baseTokens = [
-  // ERC20Token.DAI,
-  // ERC20Token.WETH,
-  // ERC20Token.USDC,
-  // ERC20Token.USDT,
-  // ERC20Token.WMATIC,
-  // ERC20Token.WBTC,
-  ...Object.keys(ERC20Token).map((key) => ERC20Token[key]),
-  // ERC20Token.MATIC,
-  // ERC20Token.LINK,
-  // ERC20Token.COMP,
-  // ERC20Token.CEL,
-  // ERC20Token.CRV,
-  // ERC20Token.QI,
+  ERC20Token.DAI,
+  ERC20Token.WETH,
+  ERC20Token.USDC,
+  ERC20Token.USDT,
+  ERC20Token.WMATIC,
+  ERC20Token.LINK,
+  // ...Object.keys(ERC20Token).slice(0, 5).map((key) => ERC20Token[key]),
 ];
 
 export const tradingTokens = [
-  // ERC20Token.DAI,
-  // ERC20Token.WETH,
-  // ERC20Token.USDC,
-  // ERC20Token.USDT,
+  ERC20Token.DAI,
+  ERC20Token.WETH,
+  ERC20Token.USDC,
+  ERC20Token.USDT,
   ERC20Token.WMATIC,
-  // ERC20Token.WBTC,
-  ...Object.keys(ERC20Token).map((key) => ERC20Token[key]),
-  // ERC20Token.MATIC,
-  // ERC20Token.LINK,
-  // ERC20Token.COMP,
-  // ERC20Token.CEL,
-  // ERC20Token.CRV,
-  // ERC20Token.QI,
+  ERC20Token.LINK,
+  // ...Object.keys(ERC20Token).slice(0, 5).map((key) => ERC20Token[key]),
 ];
 
 /**
@@ -54,7 +42,7 @@ export const tradingTokens = [
  * if you have deployed your own contract, you can use it instead of the default one
  */
 export const flashloanAddress: string =
-  "0xb6C4448386c4ECF4e5eAB057351f8a6A8A465a0D";
+  "0x905Ad472d7eeB94ed1Fc29D8ff4B53FD4D5a5Eb4";
 
 // protocols the bot will use
 export const protocols =
